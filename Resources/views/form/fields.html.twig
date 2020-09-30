@@ -1,0 +1,82 @@
+{#{% use 'form_div_layout.html.twig' %}#}
+
+{% block form_widget_simple %}
+    {% set type = type|default('text') %}
+    {% if type == 'range' or type == 'color' %}
+        {# Attribute "required" is not supported #}
+        {% set required = false %}
+        {{- block('form_widget_color_range') -}}
+    {% else %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ 'label_field')|trim}) %}
+
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
+
+    {% endif %}
+{% endblock form_widget_simple %}
+
+{% block translatable_text_row %}
+
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    <div class="input-group">
+
+        <select id="{{ form.vars.id }}" class="translatable-language-select form-control-sm">
+            {% for locale,child in form %}
+                <option {{ locale == app.request.locale?"selected":"" }}
+                        data-locale="{{ locale }}"
+                        data-language-input-id="{{ child.vars.id }}"
+                        title="{{ locale | language }}"
+                >{{ locale | upper }}</option>
+            {% endfor %}
+        </select>
+
+
+        {% for locale,child in form %}
+
+            {% if locale != app.request.locale %}
+                {% set attr = child.vars.attr|merge({'title':locale|language, 'data-locale':locale,  class: (child.vars.attr.class|default('') ~ ' hide language-input ')|trim}) -%}
+            {% else %}
+                {% set attr = child.vars.attr|merge({'title':locale|language, 'data-locale':locale,  class: (child.vars.attr.class|default('') ~ ' language-input ')|trim}) -%}
+            {% endif %}
+
+            {{ form_errors(child) }}
+            {{ form_widget(child, {attr: attr}) }}
+
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
+{% block translatable_textarea_row %}
+
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    <div class="input-group">
+
+        <select id="{{ form.vars.id }}" class="translatable-language-select form-control-sm">
+            {% for locale,child in form %}
+                <option {{ locale == app.request.locale?"selected":"" }}
+                        data-locale="{{ locale }}"
+                        data-language-input-id="{{ child.vars.id }}"
+                        title="{{ locale | language }}"
+                >{{ locale | upper }}</option>
+            {% endfor %}
+        </select>
+
+
+        {% for locale,child in form %}
+
+            {% if locale != app.request.locale %}
+                {% set attr = child.vars.attr|merge({'title':locale|language, 'data-locale':locale,  class: (child.vars.attr.class|default('') ~ ' hide language-input form-control-sm ')|trim}) -%}
+            {% else %}
+                {% set attr = child.vars.attr|merge({'title':locale|language, 'data-locale':locale,  class: (child.vars.attr.class|default('') ~ ' language-input form-control-sm')|trim}) -%}
+            {% endif %}
+
+            {{ form_errors(child) }}
+            {{ form_widget(child, {attr: attr}) }}
+
+        {% endfor %}
+    </div>
+
+{% endblock %}
