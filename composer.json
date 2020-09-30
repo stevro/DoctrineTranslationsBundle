@@ -1,0 +1,30 @@
+{
+    "name": "stev/doctrine-translations-bundle",
+    "description": "Symfony 2 Bundle providing form data mappers to handle translations using doctrine entities",
+    "type": "symfony-bundle",
+    "authors": [{
+            "name": "Stefan Matei",
+            "email": "stev.matei@gmail.com"
+        }],
+    "keywords": [
+        "symfony doctrine translations bundle"
+    ],
+    "license": [
+        "MIT"
+    ],
+    "require": {
+        "php": ">=5.6",
+        "symfony/framework-bundle": "^2.6|^3.0",
+        "doctrine/orm": "^2.4",
+        "data-dog/audit-bundle": "^0.1.13",
+        "friendsofsymfony/jsrouting-bundle": "^2.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stev\\DoctrineTranslationsBundle\\": ""
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+}
